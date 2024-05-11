@@ -1,0 +1,13 @@
+name: Build
+
+jobs:
+  build:
+
+  steps:
+    - name: Setup .NET
+      with:
+        dotnet-version: '8.0.x'
+
+    - name: Build solution
+      run: dotnet build -c Debug
+      
