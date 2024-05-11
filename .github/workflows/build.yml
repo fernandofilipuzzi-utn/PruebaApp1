@@ -1,0 +1,10 @@
+name: Build
+
+on: push
+
+jobs:
+  first-job:
+    runs-on: windows-latest
+    steps: 
+      - run: Setup .NET 8.x
+      - run: dotnet build -c Debug ./appPrueba1
