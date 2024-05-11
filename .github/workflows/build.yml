@@ -14,4 +14,4 @@ jobs:
           dotnet-version: '8.0.x'
 
       - name:
-        run: dotnet run
+        run: dotnet run --project ./appPrueba1
