@@ -4,9 +4,10 @@ jobs:
   build:
 
   steps:
-    - name: Setup .NET
+    - name: Setup .NET 8.x
+      uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '8.0.x'
+        dotnet-version: '8.x'
 
     - name: Build solution
       run: dotnet build -c Debug
