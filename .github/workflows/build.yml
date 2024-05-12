@@ -18,7 +18,7 @@ jobs:
 
       - name:
         run: dotnet publish appPrueba1 -c Relase -r win-x64 --output ./publish
-        working-directory: ./appPrueba1
+        #working-directory: ./appPrueba1
         
       - name: Upload artifact
         uses: actions/upload-artifact@v2
