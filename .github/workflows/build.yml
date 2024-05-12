@@ -16,31 +16,57 @@ jobs:
       - name:
         run: dotnet run --project ./appPrueba1
 
+#      - name: Incrementar versión
+#        run: |
+#          $version = Get-Content version.txt
+#          $versionComponents = $version.Split('.')
+#          $lastComponent = [int]$versionComponents[-1]
+#          $nextVersion = "$($versionComponents[0]).$($versionComponents[1]).$($lastComponent + 1)"
+#          $nextVersion | Out-File version.txt -Encoding utf8
+#        shell: pwsh
+
+      - name: Get latest release
+        id: get_release
+        run: |
+          release=$(curl -s "https://api.github.com/repos/${GITHUB_REPOSITORY}/releases/latest" | jq -r '.tag_name')
+          echo "::set-output name=latest_release::$release"
+        shell: bash
+
+      - name: Increment version
+        id: increment_version
+        run: |
+          latest_release=${{ steps.get_release.outputs.latest_release }}
+          next_version=$(echo "$latest_release" | awk -F '.' '{$NF+=1; OFS="."; print $0}')
+          echo "::set-output name=next_version::$next_version"
+        shell: bash        
+
       - name:
         run: |
-          dotnet publish appPrueba1 -c Relase -r win-x64 --output ./publish
-        #working-directory: ./appPrueba1
-
-      - name: Incrementar versión
-        run: |
-          $version = Get-Content version.txt -Raw
-          $versionComponents = $version.Split('.')
-          $lastComponent = [int]$versionComponents[-1]
-          $nextVersion = "$($versionComponents[0]).$($versionComponents[1]).$($lastComponent + 1)"
-          $nextVersion | Out-File version.txt -Encoding utf8
-        shell: pwsh
+            dotnet publish appPrueba1 -c Relase -r win-x64 --output ./publish
+          #working-directory: ./appPrueba1
         
-      - name: Crear release
+#      - name: Crear release
+#        id: create_release
+#        uses: actions/create-release@v1
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        with:
+#          tag_name: v1.0.0
+#          release_name: Release v1.0.1
+#          draft: false
+#          prerelease: false
+
+      - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v1.0.0
-          release_name: Release v1.0.1
+          tag_name: ${{ steps.increment_version.outputs.next_version }}
+          release_name: Release ${{ steps.increment_version.outputs.next_version }}
           draft: false
-          prerelease: false
-      
+          prerelease: false      
+
       - name: Upload Release Asset
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
