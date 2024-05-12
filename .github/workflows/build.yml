@@ -17,13 +17,31 @@ jobs:
         run: dotnet run --project ./appPrueba1
 
       - name:
-        run: dotnet publish appPrueba1 -c Relase -r win-x64 --output ../publish
+        run: 
+          dotnet publish appPrueba1 -c Relase -r win-x64 --output ./publish
         #working-directory: ./appPrueba1
         
-      - name: Upload artifact
-        uses: actions/upload-artifact@v2
+      - name: Crear release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          name: MyApp
-          path: ./publish
+          tag_name: v1.0.0
+          release_name: Release v1.0.0
+          draft: false
+          prerelease: false
+      
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-relese-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.ouputs.upload_url }}
+          asset_path: ./publish
+          asset_name: MyApp.exe
+          asset_content_type: application/octet-stream
+
 
 
