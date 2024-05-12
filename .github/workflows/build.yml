@@ -22,13 +22,13 @@ jobs:
         #working-directory: ./appPrueba1
 
       - name: Incrementar versión
-          run: |
-            $version = Get-Content version.txt
-            $versionComponents = $version.Split('.')
-            $lastComponent = [int]$versionComponents[-1]
-            $nextVersion = "$($versionComponents[0]).$($versionComponents[1]).$($lastComponent + 1)"
-            $nextVersion | Out-File version.txt -Encoding utf8
-          shell: pws
+        run: |
+          $version = Get-Content version.txt
+          $versionComponents = $version.Split('.')
+          $lastComponent = [int]$versionComponents[-1]
+          $nextVersion = "$($versionComponents[0]).$($versionComponents[1]).$($lastComponent + 1)"
+          $nextVersion | Out-File version.txt -Encoding utf8
+        shell: pws
         
       - name: Crear release
         id: create_release
