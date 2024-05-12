@@ -28,8 +28,10 @@ jobs:
       - name: Get latest release
         id: get_release
         run: |
-          release=$(curl -s "https://api.github.com/repos/${GITHUB_REPOSITORY}/releases/latest" | jq -r '.tag_name')
-          echo "::set-output name=latest_release::$release"
+          $url = "https://api.github.com/repos/$env:GITHUB_REPOSITORY/releases/latest"
+          $response = Invoke-RestMethod -Uri $url -Method Get -Headers @{Authorization = "token $env:GITHUB_TOKEN"}
+          $latest_release = $response.tag_name
+          Write-Host "::set-output name=latest_release::$latest_release"
         shell: bash
 
       - name: Increment version
