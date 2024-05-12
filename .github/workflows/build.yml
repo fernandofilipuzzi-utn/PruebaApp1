@@ -23,7 +23,7 @@ jobs:
 
       - name: Incrementar versión
         run: |
-          $version = Get-Content version.txt
+          $version = Get-Content version.txt -Raw
           $versionComponents = $version.Split('.')
           $lastComponent = [int]$versionComponents[-1]
           $nextVersion = "$($versionComponents[0]).$($versionComponents[1]).$($lastComponent + 1)"
