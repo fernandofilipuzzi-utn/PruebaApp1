@@ -28,7 +28,7 @@ jobs:
           $lastComponent = [int]$versionComponents[-1]
           $nextVersion = "$($versionComponents[0]).$($versionComponents[1]).$($lastComponent + 1)"
           $nextVersion | Out-File version.txt -Encoding utf8
-        shell: pws
+        shell: pwsh
         
       - name: Crear release
         id: create_release
