@@ -40,7 +40,7 @@ jobs:
           latest_release=${{ steps.get_release.outputs.latest_release }}
           next_version=$(echo "$latest_release" | awk -F '.' '{$NF+=1; OFS="."; print "v"$0}')
           echo "::set-output name=next_version::$next_version"
-        shell: bash        
+        shell: pwsh       
 
       - name:
         run: |
