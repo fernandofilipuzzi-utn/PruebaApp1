@@ -47,38 +47,38 @@ jobs:
             dotnet publish appPrueba1 -c Relase -r win-x64 --output ./publish
           #working-directory: ./appPrueba1
         
-#      - name: Crear release
-#        id: create_release
-#        uses: actions/create-release@v1
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#        with:
-#          tag_name: v1.0.0
-#          release_name: Release v1.0.1
-#          draft: false
-#          prerelease: false
-
-      - name: Create Release
+      - name: Crear release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.increment_version.outputs.next_version }}
-          release_name: Release ${{ steps.increment_version.outputs.next_version }}
+          tag_name: v1.0.0
+          release_name: Release v1.0.2
           draft: false
-          prerelease: false      
+          prerelease: false
 
-      - name: Upload Release Asset
-        id: upload-release-asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./publish/appPrueba1.exe
-          asset_name: appPrueba1.exe
-          asset_content_type: application/octet-stream
+#      - name: Create Release
+#        id: create_release
+#        uses: actions/create-release@v1
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        with:
+#          tag_name: ${{ steps.increment_version.outputs.next_version }}
+#          release_name: Release ${{ steps.increment_version.outputs.next_version }}
+#          draft: false
+#          prerelease: false      
+
+#      - name: Upload Release Asset
+#        id: upload-release-asset
+#        uses: actions/upload-release-asset@v1
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        with:
+#          upload_url: ${{ steps.create_release.outputs.upload_url }}
+#          asset_path: ./publish/appPrueba1.exe
+#          asset_name: appPrueba1.exe
+#          asset_content_type: application/octet-stream
 
 
 
