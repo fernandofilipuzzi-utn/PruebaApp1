@@ -42,7 +42,7 @@ jobs:
           echo "::set-output name=next_version::$next_version"
         shell: bash        
 
-      - name:
+      - name: Publish
         run: |
             dotnet publish appPrueba1 -c Relase -r win-x64 --output ./publish
           #working-directory: ./appPrueba1
